@@ -6,12 +6,11 @@ Snake and Ladder
 2. A Board (10x10)
 3. 'Player-1' plays first by default 
 4. Validates the player's turn
-5. 
-6. Game status :
+5. Game status :
             1. Player-wins if 100 is reached first
             2. Ongoing
-7. Displays the board and status on each turn
-8. Warning message on wrong move or invalid player.
+6. Displays the board and status on each turn
+7. Warning message on wrong move or invalid player.
 
 
 # How to play:
@@ -20,7 +19,7 @@ Snake and Ladder
 2. Enter players' names. 'player-1' has the first turn by default.
 3. enter p1/p2 when promped.  
 
-# Design and domain requirements. 
+# Description and flow of the game. 
 
 1. We start the game.
 
@@ -87,12 +86,7 @@ Snake and Ladder
 
 10. The game continues untill one wins. It shows error if players get repeated block positions, players can not be at the same position.
 
-
-
-
- 
-
-  ## Emerging Requirements
+  # Design and domain requirements. 
 
   1. Store the name of the players.
   2. Current player, Next player.
