@@ -27,7 +27,6 @@ const snake_ladder = (player1, player2) => {
   // Dice
   const dice = () => {
     let score = Math.trunc(Math.random() * 12);
-    console.log(`DICE = ${score}`);
     return score;
   };
 
@@ -59,61 +58,57 @@ const snake_ladder = (player1, player2) => {
     }
   };
 
-  //checing for snakes or ladders and decreasing or increasing the position
-  const snakeOrLadder = () => {
-    // rolling dice
-    let move = dice();
-
-    // checking for snakes/ladders
+  //checking for snakes or ladders and decreasing or increasing the position
+  const snakeOrLadder = (currentBlock) => {
+  
     snakeLadder.forEach(([i, j]) => {
-      if (move === i) {
-        console.log(`snake/ladder encountered, old position: ${move}`);
-        move = j;
+      if (currentBlock === i) {
+        console.log(`snake/ladder encountered, old position: ${currentBlock}`);
+        currentBlock = j;
       }
     });
-    return move;
+    return currentBlock;
   };
 
   // marking players positions on the board
 
   const updateBoard = (currentPlayer, move) => {
-    // board.forEach((element)=>{
-
-    //   if(!element === nextPlayer[currentPlayer]){
-    //     element="_";
-    //   }
-
-    // });
 
     board[move] = currentPlayer;
   };
 
   //Update position
-  const updatePosition = () => {
+  const updatePosition = (move) => {
     let length = position[currentPlayer].length;
     let current;
     let sum = 1;
+    let finalPosition;
 
     if (length === 0) {
-      console.log("first");
+
       sum=move;
-      position[currentPlayer].push(move);
-      console.log(`${position[currentPlayer]}`);
+      finalPosition = snakeOrLadder(sum);
+      position[currentPlayer].push(finalPosition);
+      console.log(`All positions: ${position[currentPlayer]}`);
     } else if (length === 1) {
-      console.log("second");
+      
       current = position[currentPlayer][0];
-      console.log(`${position[currentPlayer]}`);
-      console.log(`current position:${current + move}`);
-      position[currentPlayer].push(current + move);
+      sum = current + move;
+      finalPosition = snakeOrLadder(sum);
+      position[currentPlayer].push(finalPosition);
+      console.log(`current position :${finalPosition}`);
+      console.log(`All positions: ${position[currentPlayer]}`);
+      
     } else if (length > 1) {
-      console.log("third");
+      
       current = position[currentPlayer][position[currentPlayer].length - 1];
       sum = current + move > 100 ? 0 : current + move;
-      console.log(`Old positions: ${position[currentPlayer]}`);
-      console.log(`Current position:${sum}`);
-      position[currentPlayer].push(sum);
+      finalPosition = snakeOrLadder(sum);
+      position[currentPlayer].push(finalPosition);
+      console.log(`Current position: ${finalPosition}`); 
+      console.log(`All positions: ${position[currentPlayer]}`);
     }
-    return sum;
+    return finalPosition;
   };
 
   // checking status of the game
@@ -138,8 +133,8 @@ const snake_ladder = (player1, player2) => {
       return [false, `Not your turn, its ${currentPlayer}'s turn.`];
     }
 
-    // checking for snakes or ladder
-    move = snakeOrLadder();
+    // rolling dice
+    let move = dice();
     console.log(`${currentPlayer} dice score: ${move}`);
 
     // Validate right move: return <error> if not
@@ -148,7 +143,7 @@ const snake_ladder = (player1, player2) => {
     }
 
     // updating position object
-    let updatedPosition = updatePosition();
+    let updatedPosition = updatePosition(move);
 
     //Updating the board with new positions
     updateBoard(currentPlayer, updatedPosition);

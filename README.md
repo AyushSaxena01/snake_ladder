@@ -63,15 +63,30 @@ Snake and Ladder
     p2: [],
   };
 
-  After each turn these array gets updated respectively and store the value of position. For every new turn the dice score is added in the preveous block value (last element in the position arrays):
+  Position is updated using the updatePosition() which takes the move/dice score as the argument 
+
+  In the updatePosition() we take 'current' as the current position of player (last index of position arrays), the new updated position is calculated by adding current and move:
   
   current + move  (current => current positin from the position array, move => dice score)
+
+  This sum is passed to snakeOrLadder() which checks if the new block position contains a snake or ladder and returns the altered block position accordingly.
   
-  Then this sum value is pushed 
+  Then this altered block position value  (finalPosition) is pushed in the position array for respective player.
+
+  The finalPosition value is passed as argument to updateBoard() which places the p1/p2 on the finalPosition index value.
   
   Currently board is being printed incorrectly orientation wise.
 
-8. 
+8. The status of the game is stored at 0th index of the board:
+
+     board[0] = computeStatus();
+
+9. Players' turn is changed by look up table:
+
+  currentPlayer = nextPlayer[currentPlayer];
+
+10. The game continues untill one wins. It shows error if players get repeated block positions, players can not be at the same position.
+
 
 
 
@@ -83,6 +98,7 @@ Snake and Ladder
   2. Current player, Next player.
   3. Store the game board.
   4. game status.
+  5. store snakes and ladders.
   5. Game orchestration. 
 
     
